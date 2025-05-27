@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Controle de Manutenção</title>
+    <link rel="stylesheet" href="../static/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚛 Sistema de Controle de Manutenção</h1>
+            <p>Gerenciamento completo de manutenções de veículos</p>
+        </header>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <ul>
+                    <li><a href="#dashboard" data-section="dashboard">📊 Dashboard</a></li>
+                    <li><a href="#cadastrar" data-section="cadastrar">➕ Cadastrar</a></li>
+                    <li><a href="#listagem" data-section="listagem">📋 Listagem</a></li>
+                    <li><a href="#relatorios" data-section="relatorios">📈 Relatórios</a></li>
+                    <li><a href="#colinha" data-section="colinha">📝 Colinha</a></li>
+                </ul>
+            </div>
+
+            <main>
+                <div id="dashboard" class="section">
+                    <h2>Dashboard</h2>
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <p id="total-manutencoes">0</p>
+                            <h3>Total de Manutenções</h3>
+                        </div>
+                        <div class="card">
+                            <p id="valor-total">R$ 0,00</p>
+                            <h3>Valor Total</h3>
+                        </div>
+                        <div class="card" >
+                            <p id="veiculos-atendidos">0</p>
+                            <h3>Veículos Atendidos</h3>
+                        </div>
+                        <div class="card">
+                            <p id="manutencoes-mes">0</p>
+                            <h3>Manutenções no Mês</h3>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="grafico-comparacao"></canvas>
+                    </div>
+                </div>
+
+                <div id="cadastrar" class="section">
+                    <h2>Cadastrar Nova Manutenção</h2>
+                    <form id="form-cadastrar">
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" name="data" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="placa">Placa</label>
+                            <input type="text" id="placa" name="placa" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="motorista">Motorista</label>
+                            <input type="text" id="motorista" name="motorista" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <select id="tipo" name="tipo" required>
+                                <option value="Pneu">Pneu</option>
+                                <option value="Mecânica">Mecânica</option>
+                                <option value="Elétrica">Elétrica</option>
+                                <option value="Tacógrafo">Tacógrafo</option>
+                                <option value="Chapeação">Chapeação</option>
+                                <option value="Pintura">Pintura</option>
+                                <option value="Lavagem">Lavagem</option>
+                                <option value="Peças">Peças</option>
+                                <option value="Compra de Corda">Corda</option>
+                                <option value="Madeirite">Madeirite</option>
+                                <option value="Lona">Lona</option>
+                                <option value="Cinta e Catraca">Cinta e Catraca</option>
+                                <option value="EPIs">EPIs</option>
+                                <option value="DIVERSOS">DIVERSO</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="oc">OC</label>
+                            <input type="text" id="oc" name="oc">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor">Valor</label>
+                            <input type="number" id="valor" name="valor" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pix">PIX</label>
+                            <input type="text" id="pix" name="pix">
+                        </div>
+                        <div class="form-group">
+                            <label for="favorecido">Favorecido PIX</label>
+                            <input type="text" id="favorecido" name="favorecido">
+                        </div>
+                        <div class="form-group">
+                            <label for="local">Local</label>
+                            <input type="text" id="local" name="local" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="defeito">Defeito/Serviço</label>
+                            <textarea id="defeito" name="defeito" required></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit">💾 Salvar Manutenção</button>
+                            <button type="reset">🔄 Limpar</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="listagem" class="section">
+                    <h2>Listagem de Manutenções</h2>
+                    <div class="actions">
+                        <button>📊 Exportar Excel</button>
+                        <button>📥 Importar Excel</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Placa</th>
+                                <th>Motorista</th>
+                                <th>Tipo</th>
+                                <th>OC</th>
+                                <th>Valor</th>
+                                <th>PIX</th>
+                                <th>Favorecido</th>
+                                <th>Local</th>
+                                <th>Defeito</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-manutencoes"></tbody>
+                    </table>
+                </div>
+
+                <div id="relatorios" class="section">
+                    <h2>Relatórios</h2>
+                    <form id="form-relatorios">
+                        <div class="form-group">
+                            <label for="data_inicio">Data Início</label>
+                            <input type="date" id="data_inicio" name="data_inicio" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_fim">Data Fim</label>
+                            <input type="date" id="data_fim" name="data_fim" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="placa">Filtrar por Placa</label>
+                            <input type="text" id="placa" name="placa">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit">📊 Gerar Relatório</button>
+                            <button type="button">📄 Exportar Relatório</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="colinha" class="section">
+                    <h2>Colinha</h2>
+                    <div id="colinha-content">
+                        <p>Aqui aparecerão as informações salvas...</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div id="modal-editar" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Editar Manutenção</h2>
+                <form id="form-editar">
+                    <div class="form-group">
+                        <label for="edit-data">Data</label>
+                        <input type="date" id="edit-data" name="data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-placa">Placa</label>
+                        <input type="text" id="edit-placa" name="placa" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-motorista">Motorista</label>
+                        <input type="text" id="edit-motorista" name="motorista" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-tipo">Tipo</label>
+                        <select id="edit-tipo" name="tipo" required>
+                            <option value="Pneu">Pneu</option>
+                            <option value="Mecânica">Mecânica</option>
+                            <option value="Elétrica">Elétrica</option>
+                            <option value="Tacógrafo">Tacógrafo</option>
+                            <option value="Chapeação">Chapeação</option>
+                            <option value="Pintura">Pintura</option>
+                            <option value="Lavagem">Lavagem</option>
+                            <option value="Peças">Peças</option>
+                            <option value="Compra de Corda">Compra de Corda</option>
+                            <option value="Madeirite">Madeirite</option>
+                            <option value="Lona">Lona</option>
+                            <option value="Cinta e Catraca">Cinta e Catraca</option>
+                            <option value="EPIs">EPIs</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-oc">OC</label>
+                        <input type="text" id="edit-oc" name="oc">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-valor">Valor</label>
+                        <input type="number" id="edit-valor" name="valor" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-pix">PIX</label>
+                        <input type="text" id="edit-pix" name="pix">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-favorecido">Favorecido</label>
+                        <input type="text" id="edit-favorecido" name="favorecido">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-local">Local</label>
+                        <input type="text" id="edit-local" name="local" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-defeito">Defeito</label>
+                        <textarea id="edit-defeito" name="defeito" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">💾 Salvar</button>
+                        <button type="button" class="cancelar">❌ Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="../static/main.js"></script>
+</body>
+</html>
