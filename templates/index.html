@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -29,7 +31,9 @@
 
             <main>
                 <div id="dashboard" class="section">
-                    <h2>Dashboard</h2>
+                    <div class="title">
+                        <h2>Dashboard</h2>
+                    </div>
                     <div class="dashboard-grid">
                         <div class="card">
                             <p id="total-manutencoes">0</p>
@@ -39,7 +43,7 @@
                             <p id="valor-total">R$ 0,00</p>
                             <h3>Valor Total</h3>
                         </div>
-                        <div class="card" >
+                        <div class="card">
                             <p id="veiculos-atendidos">0</p>
                             <h3>Veículos Atendidos</h3>
                         </div>
@@ -165,13 +169,16 @@
                         </div>
                     </form>
                 </div>
-
+                
                 <div id="colinha" class="section">
                     <h2>Colinha</h2>
+                    <input type="text" id="filtro-colinha" placeholder="🔍 Filtrar por placa, motorista, tipo..."
+                        style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #ccc;">
                     <div id="colinha-content">
                         <p>Aqui aparecerão as informações salvas...</p>
                     </div>
                 </div>
+
             </main>
         </div>
 
@@ -244,4 +251,5 @@
     </div>
     <script src="../static/main.js"></script>
 </body>
+
 </html>

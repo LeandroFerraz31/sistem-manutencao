@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     {
                         label: 'Valor Gasto (R$)',
                         data: [valorDia, valorSemana, valorMes],
-                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(240, 53, 53, 0.67)',
+                        borderColor: 'rgb(202, 16, 3)',
                         borderWidth: 1
                     }
                 ]
@@ -126,21 +126,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function atualizarColinha() {
+   // Atualização da função atualizarColinha com melhorias solicitadas
+function atualizarColinha() {
     colinhaContent.innerHTML = '';
     manutencoes.forEach(manutencao => {
-        const entryText = `
-            Placa: ${manutencao.placa}
-            Motorista: ${manutencao.motorista} - Tipo: ${manutencao.tipo}
-            Valor total: R$ ${Number(manutencao.valor || 0).toFixed(2)}
-            CHAVE PIX: ${manutencao.pix || 'N/A'} ${manutencao.favorecido || ''}
-            OC: ${manutencao.oc || 'N/A'}
-            Local: ${manutencao.local}
-            Defeito: ${manutencao.defeito}
-        `.trim();
-        const escapedText = entryText.replace(/'/g, "\\'").replace(/\n/g, '\\n');
+        const entryText = `Placa: ${manutencao.placa}
+Motorista: ${manutencao.motorista} - Tipo: ${manutencao.tipo}
+Valor total: R$ ${Number(manutencao.valor || 0).toFixed(2)}
+CHAVE PIX: ${manutencao.pix || 'N/A'} ${manutencao.favorecido || ''}
+OC: ${manutencao.oc || 'N/A'}
+Local: ${manutencao.local}
+Defeito: ${manutencao.defeito}`.trim().replace(/"/g, '&quot;');
+
         const entry = `
-            <div style="border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; position: relative;">
+            <div style="border: 1px solid #ddd; padding: 10px; text-align: left; margin-bottom: 10px; border-radius: 5px; position: relative;">
                 <div>
                     <p><strong>Placa:</strong> ${manutencao.placa}</p>
                     <p><strong>Motorista:</strong> ${manutencao.motorista} - <strong>Tipo:</strong> ${manutencao.tipo}</p>
@@ -150,15 +149,50 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p><strong>Local:</strong> ${manutencao.local}</p>
                     <p><strong>Defeito:</strong> ${manutencao.defeito}</p>
                 </div>
-                <button style="position: absolute; top: 5px; right: 5px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 3px; padding: 2px 6px; cursor: pointer;" onclick="copiarColinha('${escapedText}', this)">📋</button>
+                <button class="botao-copiar" data-texto="${entryText}" style="position: absolute; top: 5px; right: 5px; background-color: #f0f0f0; border: 1px solid #ccc; border-radius: 3px; padding: 2px 6px; cursor: pointer;">📋</button>
             </div>
         `;
-        colinhaContent.innerHTML += entry;
+
+        colinhaContent.innerHTML = entry + colinhaContent.innerHTML;
     });
+
     if (manutencoes.length === 0) {
         colinhaContent.innerHTML = '<p>Aqui aparecerão as informações salvas...</p>';
     }
 }
+
+// Delegação para copiar texto da colinha
+
+document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('botao-copiar')) {
+        const texto = e.target.getAttribute('data-texto');
+        navigator.clipboard.writeText(texto).then(() => {
+            e.target.textContent = '✅';
+            setTimeout(() => {
+                e.target.textContent = '📋';
+            }, 2000);
+        }).catch(err => {
+            console.error('Erro ao copiar:', err);
+            alert('Erro ao copiar o texto.');
+        });
+    }
+});
+
+// Filtro da colinha
+const filtroInput = document.getElementById('filtro-colinha');
+if (filtroInput) {
+    filtroInput.addEventListener('input', function () {
+        const termo = this.value.toLowerCase();
+        const blocos = colinhaContent.querySelectorAll('div');
+        blocos.forEach(bloco => {
+            const texto = bloco.innerText.toLowerCase();
+            bloco.style.display = texto.includes(termo) ? 'block' : 'none';
+        });
+    });
+}
+
+
+
     function atualizarTabela() {
         tabelaManutencoes.innerHTML = '';
         manutencoes.forEach((manutencao, index) => {

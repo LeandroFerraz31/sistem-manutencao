@@ -29,13 +29,13 @@ header {
 }
 
 header h1 {
-    font-size: 1.8em;
+    font-size: 2.5em;
     font-weight: bold;
     color: #fff;
 }
 
 header p {
-    font-size: 0.9em;
+    font-size: 1.5em;
     color: #e0e0e0;
 }
 
@@ -69,7 +69,7 @@ header p {
 }
 
 .sidebar ul li a[href="#dashboard"] {
-    background-color: #ff4d4d;
+    background-color: #f70202;
 }
 
 .sidebar ul li a[href="#cadastrar"],
@@ -96,12 +96,24 @@ main {
 .section.active {
     display: block;
 }
+.title {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #ffffff;
+    background-color: slateblue;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-h2 {
+/* h2 {
     font-size: 1.5em;
     margin-bottom: 20px;
     color: #333;
-}
+} */
 
 .dashboard-grid {
     display: grid;
