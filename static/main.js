@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let relatorioAtual = [];
 
     // Configuração global do Axios
-    axios.defaults.baseURL = 'http://localhost:5000/api';
+    axios.defaults.baseURL = '/api';
     axios.defaults.timeout = 10000;
 
     mostrarSecao('dashboard');

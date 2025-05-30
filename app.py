@@ -18,6 +18,8 @@ def index():
 CORS(app, resources={r"/api/*": {"origins": [
     "http://127.0.0.1:5500",
     "http://localhost:5500",
+    "http://127.0.0.1:5000",  # ← Adicione esta linha
+    "http://localhost:5000",   # ← Adicione esta linha
     "https://sistem-manutencao.onrender.com"
 ]}})
 
