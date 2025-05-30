@@ -7,6 +7,13 @@ import base64
 from datetime import datetime
 
 app = Flask(__name__)
+
+from flask import render_template
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 # Configuração explícita de CORS para todos os endpoints /api/*
 CORS(app, resources={r"/api/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
 
