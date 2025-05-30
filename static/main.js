@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function atualizarGrafico() {
-        const ctx = document.getElementById('grafico-comparacao').getContext('2d');
+        const ctx = document.getElementById('grafico-comparacao').getContext('1d');
         if (grafico) grafico.destroy();
 
         const hoje = new Date();
