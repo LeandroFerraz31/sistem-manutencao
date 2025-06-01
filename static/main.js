@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let relatorioAtual = [];
 
     // Configuração global do Axios
-    axios.defaults.baseURL = 'http://localhost:5000/api';
+    axios.defaults.baseURL = 'https://sistem-manutencao.onrender.com/api';
     axios.defaults.timeout = 10000;
 
     mostrarSecao('dashboard');
@@ -233,7 +233,7 @@ if (filtroColinhaInput) {
 
     async function carregarManutencoes() {
         try {
-            const response = await axios.get('http://localhost:5000/api/manutencoes');
+            const response = await axios.get('/manutencoes');
 
             manutencoes = response.data;
             relatorioAtual = response.data; // Inicializa com todos os dados
