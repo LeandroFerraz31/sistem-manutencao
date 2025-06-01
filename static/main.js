@@ -233,7 +233,8 @@ if (filtroColinhaInput) {
 
     async function carregarManutencoes() {
         try {
-            const response = await axios.get('/manutencoes');
+            const response = await axios.get('http://localhost:5000/api/manutencoes');
+
             manutencoes = response.data;
             relatorioAtual = response.data; // Inicializa com todos os dados
             atualizarTabela();
