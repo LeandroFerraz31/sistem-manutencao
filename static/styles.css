@@ -317,3 +317,83 @@ td button:hover {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+/* Responsividade para telas menores */
+@media (max-width: 1024px) {
+  .main-content {
+    flex-direction: column; /* Empilha sidebar e conteúdo */
+  }
+
+  .sidebar {
+    flex: 1 1 100%;
+    margin-bottom: 20px; /* Espaço entre sidebar e conteúdo */
+  }
+
+  main {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 1.5em;
+  }
+
+  header p {
+    font-size: 0.9em;
+  }
+
+  .sidebar ul li a {
+    font-size: 0.9em;
+    padding: 8px;
+  }
+
+  .card p {
+    font-size: 1.2em;
+  }
+
+  .card h3 {
+    font-size: 0.9em;
+  }
+
+  table,
+  th,
+  td {
+    font-size: 0.9em;
+  }
+
+  .chart-container {
+    max-width: 100%; /* Ajusta gráfico para caber */
+  }
+}
+
+/* Ajuste final para telas muito pequenas */
+@media (max-width: 480px) {
+  header h1 {
+    font-size: 1.2em;
+  }
+
+  header p {
+    font-size: 0.8em;
+  }
+
+  .card {
+    padding: 10px;
+  }
+
+  .card p {
+    font-size: 1em;
+  }
+
+  .card h3 {
+    font-size: 0.8em;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}

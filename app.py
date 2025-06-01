@@ -15,13 +15,7 @@ def index():
     return render_template('index.html')
 
 # Configuração explícita de CORS para todos os endpoints /api/*
-CORS(app, resources={r"/api/*": {"origins": [
-    "http://127.0.0.1:5500",
-    "http://localhost:5500",
-    "http://127.0.0.1:5000",  # ← Adicione esta linha
-    "http://localhost:5000",   # ← Adicione esta linha
-    "https://sistem-manutencao.onrender.com"
-]}})
+CORS(app, resources={r"/api/*": {"origins": ["http://127.0.0.1:5500", "http://localhost:5500"]}})
 
 def init_db():
     conn = sqlite3.connect('manutencoes.db')

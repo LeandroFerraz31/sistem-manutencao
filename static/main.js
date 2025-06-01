@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let relatorioAtual = [];
 
     // Configuração global do Axios
-    axios.defaults.baseURL = '/api';
+    axios.defaults.baseURL = 'http://localhost:5000/api';
     axios.defaults.timeout = 10000;
 
     mostrarSecao('dashboard');
@@ -179,9 +179,9 @@ document.addEventListener('click', function (e) {
 });
 
 // Filtro da colinha
-const filtroInput = document.getElementById('filtro-colinha');
-if (filtroInput) {
-    filtroInput.addEventListener('input', function () {
+const filtroColinhaInput = document.getElementById('filtro-colinha');
+if (filtroColinhaInput) {
+    filtroColinhaInput.addEventListener('input', function () {
         const termo = this.value.toLowerCase();
         const blocos = colinhaContent.querySelectorAll('div');
         blocos.forEach(bloco => {
@@ -449,7 +449,17 @@ if (filtroInput) {
             alert(`Erro ao exportar relatório: ${error.response?.data?.error || error.message}`);
         }
     });
-
+const filtroListagemInput = document.getElementById('filtro-listagem');
+if (filtroListagemInput) {
+    filtroListagemInput.addEventListener('input', function () {
+        const termo = this.value.toLowerCase();
+        const linhas = document.getElementById('tabela-manutencoes').querySelectorAll('tr');
+        linhas.forEach(linha => {
+            const texto = linha.innerText.toLowerCase();
+            linha.style.display = texto.includes(termo) ? '' : 'none';
+        });
+    });
+}
     // EXPORTAR EXCEL (LISTAGEM COMPLETA)
     document.querySelector('#listagem .actions button:first-child').addEventListener('click', async () => {
         if (typeof XLSX === 'undefined') {
@@ -483,6 +493,9 @@ if (filtroInput) {
         }
     });
 
+
+/* Remover filtro duplicado da colinha (já existe filtroColinhaInput acima) */
+// Remover qualquer declaração duplicada de filtroInput ou filtroColinhaInput aqui.
     // IMPORTAR EXCEL
     document.querySelector('#listagem .actions button:last-child').addEventListener('click', () => {
         if (typeof XLSX === 'undefined') {
@@ -578,6 +591,8 @@ if (filtroInput) {
         };
         input.click();
     });
+
+    
 
     window.copiarColinha = function(text, button) {
     navigator.clipboard.writeText(text).then(() => {
