@@ -1,6 +1,3 @@
-Claro! Aqui está o conteúdo completo já formatado para o arquivo **README.md** do seu projeto, tudo junto para você usar direto no GitHub:
-
-````markdown
 # Sistema de Controle de Manutenções de Veículos
 
 ## Descrição
@@ -45,18 +42,18 @@ O sistema ajuda a evitar atrasos e custos desnecessários, otimizando a gestão 
 
 1. Clone o repositório:
 
-   ```bash
+
    git clone https://github.com/LeandroFerraz31/sistem-manutencao.git
    cd sistem-manutencao
-````
+
 
 2. Crie e ative um ambiente virtual (opcional, mas recomendado):
 
-   ```bash
+
    python -m venv venv
    source venv/bin/activate  # Linux/macOS
    venv\Scripts\activate     # Windows
-   ```
+
 
 3. Instale as dependências:
 
@@ -120,5 +117,3 @@ Fique à vontade para testar, contribuir e enviar feedback.
 
 ```
 
-Se quiser, posso ajudar a criar o arquivo `requirements.txt` ou qualquer outro arquivo complementar!
-```
